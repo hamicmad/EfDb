@@ -11,7 +11,6 @@ namespace EfDb
 
         public AppEfContext()
         {
-            Database.EnsureDeleted();
             Database.EnsureCreated();
         }
 
@@ -28,7 +27,7 @@ namespace EfDb
 
                 entity.HasMany(u => u.Teams).WithMany(t => t.Users);
 
-                entity.HasOne(u => u.Task).WithOne(t => t.User).OnDelete(DeleteBehavior.SetNull);
+                entity.HasMany(u => u.Tasks).WithOne(t => t.User).OnDelete(DeleteBehavior.SetNull);
             });
 
             modelBuilder.Entity<UserProfile>().HasOne(up => up.User).WithOne(u => u.UserProfile);
@@ -37,16 +36,12 @@ namespace EfDb
 
             modelBuilder.Entity<Task>(entity =>
             {
-                entity.HasOne(t => t.User).WithOne(u => u.Task);
+                entity.HasOne(t => t.User).WithMany(u => u.Tasks);
 
-                //entity.Property(t => t.Complexity).HasColumnType("nvarchar(20)");
+                entity.Property(t => t.Complexity).HasConversion<string>();
 
-                //entity.Property(t => t.Status).HasColumnType("nvarchar(20)");
+                entity.Property(t => t.Status).HasConversion<string>();
             });
-
-
-
-
         }
     }
 }

@@ -1,14 +1,8 @@
 ﻿
 namespace EfDb
 {
-    public class Enums
+    public class EnumTaskStatus
     {
-        public enum TaskComplexity
-        {
-            High = 1,
-            Medium,
-            Low
-        }
         public enum Status
         {
             Completed = 1,
