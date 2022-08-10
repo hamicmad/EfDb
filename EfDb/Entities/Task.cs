@@ -1,4 +1,5 @@
-﻿using EfDb.Enums;
+﻿using static EfDb.Enums.EnumTaskComplexity;
+using static EfDb.EnumTaskStatus;
 
 namespace EfDb
 {

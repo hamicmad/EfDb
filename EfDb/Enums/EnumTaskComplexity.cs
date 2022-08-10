@@ -1,10 +1,14 @@
 ﻿
+
 namespace EfDb.Enums
 {
-    public enum TaskComplexity
+    public class EnumTaskComplexity
     {
-        High = 1,
-        Medium,
-        Low
+        public enum TaskComplexity
+        {
+            High = 1,
+            Medium,
+            Low
+        }
     }
 }
