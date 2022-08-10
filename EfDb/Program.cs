@@ -1,4 +1,6 @@
 ﻿using EfDb;
+using EfDb.Enums;
+using EfDb.Models;
 using EfDb.Repositories;
 
 var db = new AppEfContext();
@@ -80,11 +82,14 @@ while (true)
                 switch (Console.ReadLine())
                 {
                     case "1":
-                        var compl = int.Parse(Console.ReadLine());
-                        var hours = int.Parse(Console.ReadLine());
-                        var status = int.Parse(Console.ReadLine());
-                        var deskription = Console.ReadLine();
-                        TaskRepo.CreateTask(db, compl, hours, status, deskription);
+                        var taskModel = new CreateTaskModel
+                        {
+                            Complexity = (TaskComplexity)int.Parse(Console.ReadLine()),
+                            Hours = int.Parse(Console.ReadLine()),
+                            Status = (Status)int.Parse(Console.ReadLine()),
+                            Description = Console.ReadLine()
+                        };
+                        TaskRepo.CreateTask(db, taskModel);
                         Console.WriteLine("Success");
                         break;
                     case "2":
@@ -103,6 +108,5 @@ while (true)
     {
         Console.WriteLine(ex.Message);
     }
-    Console.Clear();
 }
 Console.ReadLine();

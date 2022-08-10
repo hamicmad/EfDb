@@ -1,21 +1,22 @@
 ﻿using EfDb.Enums;
+using EfDb.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace EfDb.Repositories
 {
     public class TaskRepo
     {
-        public static void CreateTask(AppEfContext db, int complexity, int hours, int status, string description)
+        public static void CreateTask(AppEfContext db, CreateTaskModel model)
         {
             var task = new Task()
             {
-                Complexity = (EnumTaskComplexity.TaskComplexity)complexity,
-                Hours = hours,
-                Status = (EnumTaskStatus.Status)(TaskStatus)status,
-                Description = description
+                Complexity = model.Complexity,
+                Hours = model.Hours,
+                Status = model.Status,
+                Description = model.Description
             };
             db.Tasks.Add(task);
-            db.SaveChanges();
+            db.SaveChangesAsync();
         }
 
         public static List<Task> ReadTasks(AppEfContext db)
@@ -25,21 +26,21 @@ namespace EfDb.Repositories
 
         public static void UpdateTask(AppEfContext db, int id)
         {
-            var task = db.Tasks.FirstOrDefault(t => t.Id == id);
+            var task =  db.Tasks.FirstOrDefaultAsync(t => t.Id == id);
             if (task != null)
             {
                 //Изменения
-                db.SaveChanges();
+                db.SaveChangesAsync();
             }
         }
 
-        public static void DeleteTask(AppEfContext db, int id)
+        public static async void DeleteTask(AppEfContext db, int id)
         {
             var task = db.Tasks.FirstOrDefault(t => t.Id == id);
             if (task != null)
             {
                 db.Tasks.Remove(task);
-                db.SaveChanges();
+                db.SaveChangesAsync();
             }
         }
 
@@ -47,9 +48,9 @@ namespace EfDb.Repositories
         {
             var task = db.Tasks.FirstOrDefault(t => t.Id == taskId);
 
-            task.Status = (EnumTaskStatus.Status)2;
+            task.Status = (Status)2;
             task.User = db.Users.FirstOrDefault(u => u.SecondName == UsName);
-            db.SaveChanges();
+            db.SaveChangesAsync();
         }
     }
 }
