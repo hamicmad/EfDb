@@ -1,11 +1,14 @@
 ﻿
-namespace EfDb.Enums
+namespace EfDb
 {
-    public enum Status
+    public class EnumTaskStatus
     {
-        Completed = 1,
-        InProcess,
-        Closed,
-        Pending
+        public enum Status
+        {
+            Completed = 1,
+            InProcess,
+            Closed,
+            Pending
+        }
     }
 }
